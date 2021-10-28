@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1633223256 source:c:\users\micaela\onedrive\escritorio\1-algoritmos utn\tp algoritmos 1\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<fstream>
+	<iostream>
+	<conio.h>
+	<cstring>
+	<ctime>
+	<algorithm>
+	<time.h>
+
+1635433688 source:c:\users\micaela\onedrive\escritorio\1-algoritmos utn\tp\tp algoritmos 1\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<cstring>
+	<fstream>
+
