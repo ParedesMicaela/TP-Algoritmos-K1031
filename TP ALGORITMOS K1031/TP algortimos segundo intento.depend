@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1636421424 source:c:\users\micaela\onedrive\escritorio\1-algoritmos utn\tp algortimos segundo intento\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<cstring>
+	<fstream>
+
+1636510746 source:c:\users\micaela\onedrive\escritorio\1-algoritmos utn\z tp algoritmos paredes\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<cstring>
+	<fstream>
+
+1636563401 source:c:\users\micaela\onedrive\escritorio\1-algoritmos utn\tp algoritmos k1031\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<cstring>
+	<fstream>
+
