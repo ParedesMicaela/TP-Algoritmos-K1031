@@ -520,9 +520,9 @@ void cargararchivoincidente()
 
     strcpy(i.nropoliza,"014");
     strcpy(i.dniasegurado,"987654");
-    strcpy(i.dniotroconductor,"545664");
+    strcpy(i.dniotroconductor,"545326");
     strcpy(i.codigoincidente,"006");
-    strcpy(i.fecha,"2009100619:56");
+    strcpy(i.fecha,"2009110620:13");
     strcpy(i.altura,"2345");
     strcpy(i.calle,"Corrientes");
     fwrite(&i,sizeof(incidente),1,f);
@@ -663,57 +663,38 @@ void mostrarpoliza(poliza p)
         return;
 }
 
-void sobreescribirArchivo(nodopoliza *&a)
-{
-    FILE *f;
-    poliza r;
-    if (f=fopen("Asegurados.BAK","r"))
-    {
-        while (fread(&r,sizeof(poliza),1,f)){
-                if (strcmp(r.acti, "SI")==0 || strcmp(r.acti, "si")==0){
-                    insertarsiguientepoliza(a,r);
-                }
-        }
-    }
-    fclose(f);
-    return;
-}
-
 void guardarPolizasArchivo(nodopoliza *lp)
 {
     FILE *arch_polizas;
-    nodopoliza *auxPol=NULL;
-    if (arch_polizas= fopen("Asegurados.BAK","wb"))
+    FILE *arch_incidentes;
+    nodopoliza *auxP=NULL;
+    nodoincidente *auxI=NULL;
+    if (arch_polizas= fopen(RUTA,"wb"))
     {
-        auxPol= lp;
-        while (auxPol)
+        if (arch_incidentes= fopen(RUTA2,"wb"))
         {
-            fwrite(&(auxPol->info), sizeof(poliza),1,arch_polizas);
-            auxPol= obtenersiguientepoliza(auxPol);
+            auxP= lp;
+            while (auxP)
+            {
+                if(auxP->info.activa==0){
+                fwrite(&(auxP->info), sizeof(poliza),1,arch_polizas);
+                auxI= auxP->sublista;
+                while(auxI)
+                {
+                    fwrite(&(auxI->info), sizeof(incidente),1,arch_incidentes);
+                    auxI= obtenersiguienteincidente(auxI);
+                }
+                }
+                auxP= obtenersiguientepoliza(auxP);
+            }
+            fclose(arch_incidentes);
         }
+        else
+            cout << "ERROR AL INTENTAR GRABAR ARCHIVO DE INCIDENTES" << endl;
         fclose(arch_polizas);
     }
     else
         cout << "ERROR AL INTENTAR GRABAR ARCHIVO DE POLIZAS" << endl;
-    return;
-}
-
-void guardarIncidentesArchivo(nodoincidente *li)
-{
-    FILE *arch_incidente;
-    nodoincidente *auxInc=NULL;
-    if (arch_incidente= fopen("procesados.BAK","wb"))
-    {
-        auxInc= li;
-        while (auxInc)
-        {
-            fwrite(&(auxInc->info), sizeof(incidente),1,arch_incidente);
-            auxInc= obtenersiguienteincidente(auxInc);
-        }
-        fclose(arch_incidente);
-    }
-    else
-        cout << "ERROR AL INTENTAR GRABAR ARCHIVO DE INCIDENTES" << endl;
     return;
 }
 
@@ -884,7 +865,6 @@ int main()
         switch (elegida)
         {
             case '0':
-                borrarlistaincidente(listaincidentes);
                 borrarlistapoliza(listapolizas);
                 cargararchivo();
                 cargararchivoincidente();
@@ -974,7 +954,7 @@ int main()
                 cout << "Ingrese la altura:" << endl;
                 cin >> i.altura;
                 actualizar(listapolizas,i.dniasegurado);
-                r=buscarpordni(listapolizas,i.dniasegurado);
+                r=buscarpordni(listapolizas,i.dniotroconductor);
                 if(r)
                 {
                     otroconductor(listapolizas,i.dniotroconductor,i.codigoincidente,i.fecha,i.dniasegurado,i.altura,i.calle);
@@ -995,9 +975,8 @@ int main()
             case '9':
                 cout << "" << endl;
                 cout<<"Archivo actualizado"<<endl;
-                sobreescribirArchivo(listapolizas);
+                cout << "" << endl;
                 guardarPolizasArchivo(listapolizas);
-                guardarIncidentesArchivo(listaincidentes);
                 borrarlistapoliza(listapolizas);
                 levantararchivos(listapolizas);
             break;
